@@ -16,6 +16,7 @@ module RelinkApi
     attr_accessor :api_secret
     attr_accessor :api_base_url
     attr_accessor :notification_url
+    attr_accessor :account_id
 
     def initialize
       @api_base_url = API_BASE_URL

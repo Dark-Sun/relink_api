@@ -7,7 +7,7 @@ module RelinkApi
 
     GET_URL    = "/social".freeze
 
-    def self.get(email:)
+    def self.show(email:)
       HTTParty.get(RelinkApi.config.api_base_url + GET_URL + "?email=" + email,
                    headers: RelinkApi.authentication_header)
     end

@@ -5,17 +5,24 @@ require 'httparty'
 module RelinkApi
   module Analyze
 
-    POST_REQUIRED_PARAMS         = %w(job_id profile)
-    POST_PROFILE_REQUIRED_PARAMS = %w(name summary positions
+    CREATE_REQUIRED_PARAMS         = %w(jobId profile)
+    CREATE_PROFILE_REQUIRED_PARAMS = %w(name summary positions
                                       email skills educations)
 
-    POST_URL             = "/analyze".freeze
+    CREATE_URL             = "/analyze".freeze
 
-    def self.post(*params)
-      RelinkApi.check_params_presence(params, POST_REQUIRED_PARAMS)
-      RelinkApi.check_params_presence(params['profile'], POST_PROFILE_REQUIRED_PARAMS)
+    def self.create(params = {})
+      params = RelinkApi.transform_params(params)
 
-      HTTParty.get(RelinkApi.api_base_url + POST_URL, params)
+      RelinkApi.check_params_presence(present:  params,
+                                      required: CREATE_REQUIRED_PARAMS)
+
+      RelinkApi.check_params_presence(present:  params['profile'],
+                                      required: CREATE_PROFILE_REQUIRED_PARAMS)
+
+      HTTParty.post(RelinkApi.config.api_base_url + CREATE_URL,
+                    body:    params.to_json,
+                    headers: RelinkApi.authentication_header)
     end
 
   end

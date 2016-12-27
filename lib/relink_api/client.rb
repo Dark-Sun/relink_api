@@ -5,8 +5,6 @@ module RelinkApi
 
   class Client
 
-    include HTTParty
-
     attr_reader :token
 
     def authenticate
